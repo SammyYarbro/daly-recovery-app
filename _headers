@@ -1,0 +1,24 @@
+# Security & caching
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=()
+
+# HTML — always revalidate so residents see updates
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Service worker must be uncached
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+  Service-Worker-Allowed: /
+
+# Manifest — short cache
+/manifest.webmanifest
+  Cache-Control: public, max-age=3600
+  Content-Type: application/manifest+json
+
+# Icons — long cache
+/icons/*
+  Cache-Control: public, max-age=31536000, immutable

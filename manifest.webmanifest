@@ -1,0 +1,87 @@
+{
+  "name": "Daly Recovery",
+  "short_name": "Daly",
+  "description": "Sober-living house app for Daly Recovery residents: check-in, curfew, chores, rent, sponsor contacts, and house chat.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#161826",
+  "theme_color": "#161826",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["health", "lifestyle", "productivity"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home-narrow.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Home — check in, curfew, chores"
+    },
+    {
+      "src": "/screenshots/chat-narrow.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "House chat and sponsor contacts"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Check in",
+      "short_name": "Check in",
+      "description": "Mark yourself home",
+      "url": "/?action=checkin",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Message house manager",
+      "short_name": "Message",
+      "description": "Open the chat with Pat",
+      "url": "/?action=message-manager",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Rent balance",
+      "short_name": "Rent",
+      "description": "See what you owe and pay",
+      "url": "/?action=rent",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
