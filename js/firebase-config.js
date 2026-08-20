@@ -1,12 +1,12 @@
 // Firebase configuration — replace with your project's values
 // Get these from: Firebase Console → Project Settings → Your Apps → Web App
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAHPgSKoSXzYqwyHPxoszNq99v4YW6FkTw",
+  authDomain: "daly-recovery-connect.firebaseapp.com",
+  projectId: "daly-recovery-connect",
+  storageBucket: "daly-recovery-connect.firebasestorage.app",
+  messagingSenderId: "831701755305",
+  appId: "1:831701755305:web:0b33353db4f832dc3510b8"
 };
 
 // Initialize Firebase
