@@ -19,6 +19,12 @@
   Cache-Control: public, max-age=3600
   Content-Type: application/manifest+json
 
+# CSS & JS — short cache (revalidate on deploy)
+/css/*
+  Cache-Control: public, max-age=3600, must-revalidate
+/js/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
 # Icons — long cache
 /icons/*
   Cache-Control: public, max-age=31536000, immutable

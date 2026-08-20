@@ -1,10 +1,15 @@
 // Daly Recovery — service worker
 // Bump CACHE_VERSION whenever you ship an updated app shell.
-const CACHE_VERSION = 'daly-recovery-v1';
+const CACHE_VERSION = 'daly-recovery-v2';
 const APP_SHELL = [
   '/',
   '/index.html',
+  '/dashboard.html',
   '/manifest.webmanifest',
+  '/css/nocturne.css',
+  '/js/firebase-config.js',
+  '/js/app.js',
+  '/js/dashboard.js',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/icons/apple-touch-icon.png',
@@ -28,11 +33,22 @@ self.addEventListener('activate', (event) => {
 
 // Network-first for HTML (so residents always see the latest UI when online),
 // cache-first for static assets (fast, works offline).
+// Skip caching for Firebase & Stripe API calls.
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
+
+  // Don't cache Firebase, Stripe, or Google APIs
+  if (url.hostname.includes('googleapis.com') ||
+      url.hostname.includes('firebaseio.com') ||
+      url.hostname.includes('stripe.com') ||
+      url.hostname.includes('gstatic.com') ||
+      url.hostname.includes('cloudfunctions.net')) {
+    return;
+  }
+
   const isHTML = req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html');
 
   if (isHTML) {

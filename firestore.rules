@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: is the user authenticated?
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    // Helper: is the user a manager?
+    function isManager() {
+      return isAuth() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'manager';
+    }
+
+    // Helper: is the user the document owner?
+    function isOwner(uid) {
+      return isAuth() && request.auth.uid == uid;
+    }
+
+    // House settings — managers read/write, residents read
+    match /house/{docId} {
+      allow read: if isAuth();
+      allow write: if isManager();
+    }
+
+    // Users (profiles) — managers can read/write all, residents can read all + write own
+    match /users/{userId} {
+      allow read: if isAuth();
+      allow create: if isManager();
+      allow update: if isOwner(userId) || isManager();
+      allow delete: if isManager();
+    }
+
+    // Check-ins — residents create their own, managers read all
+    match /checkins/{docId} {
+      allow read: if isAuth();
+      allow create: if isAuth() && request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId) || isManager();
+    }
+
+    // Chores — managers assign, residents can mark done
+    match /chores/{docId} {
+      allow read: if isAuth();
+      allow create, delete: if isManager();
+      allow update: if isAuth();
+    }
+
+    // Messages — authenticated users can read/write
+    match /messages/{docId} {
+      allow read: if isAuth();
+      allow create: if isAuth() && request.resource.data.from == request.auth.uid;
+    }
+
+    // Notifications — managers create, residents read their own
+    match /notifications/{docId} {
+      allow read: if isAuth() && (resource.data.to == request.auth.uid || resource.data.to == 'all' || isManager());
+      allow create: if isManager();
+      allow update: if isAuth() && resource.data.to == request.auth.uid;
+    }
+
+    // Payments — residents create their own, managers read/write all
+    match /payments/{docId} {
+      allow read: if isAuth();
+      allow create: if isAuth();
+      allow update: if isManager();
+    }
+
+    // Incidents — managers only
+    match /incidents/{docId} {
+      allow read: if isAuth();
+      allow write: if isManager();
+    }
+
+    // Drug tests — managers only
+    match /tests/{docId} {
+      allow read: if isAuth();
+      allow write: if isManager();
+    }
+
+    // Applications — anyone can create (unauthenticated), managers read/write
+    match /applications/{docId} {
+      allow create: if true;
+      allow read, update, delete: if isManager();
+    }
+
+    // Alumni — managers write, authenticated read
+    match /alumni/{docId} {
+      allow read: if isAuth();
+      allow write: if isManager();
+    }
+
+    // Activity log — authenticated read, system creates
+    match /activity/{docId} {
+      allow read: if isAuth();
+      allow create: if isAuth();
+    }
+
+    // Calendar events — managers write, authenticated read
+    match /events/{docId} {
+      allow read: if isAuth();
+      allow write: if isManager();
+    }
+  }
+}
